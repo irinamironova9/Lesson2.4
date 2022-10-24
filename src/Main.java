@@ -1,6 +1,9 @@
-import transport.Bus;
-import transport.Car;
-import transport.Truck;
+import racing.drivers.DriverB;
+import racing.drivers.DriverC;
+import racing.drivers.DriverD;
+import racing.transport.Bus;
+import racing.transport.Car;
+import racing.transport.Truck;
 
 public class Main {
     public static void main(String[] args) {
@@ -49,5 +52,13 @@ public class Main {
         bus4.getBestLapTime();
         bus4.getMaxSpeed();
         System.out.println();
+
+        DriverC alisa = new DriverC("Алиса", 7, iveco);
+        DriverB john = new DriverB<>("John", 5, kia);
+        DriverD<Bus> anna = new DriverD<>("Анна", 10, bus4);
+
+        alisa.participateInRacing();
+        john.participateInRacing();
+        anna.participateInRacing();
     }
 }

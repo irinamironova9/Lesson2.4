@@ -1,4 +1,4 @@
-package transport;
+package racing.transport;
 
 public abstract class Transport {
     private final String brand;
@@ -24,8 +24,7 @@ public abstract class Transport {
 
     @Override
     public String toString() {
-        return "Транспортное средство " +
-                brand + " " + model +
+        return brand + " " + model +
                 " с объёмом двигателя в " +
                 engineVolume + " литров";
     }
@@ -42,7 +41,7 @@ public abstract class Transport {
         return engineVolume;
     }
 
-    public final void setEngineVolume(Double engineVolume) {
+    public void setEngineVolume(Double engineVolume) {
         this.engineVolume = engineVolume != null && engineVolume > 0 ? engineVolume : 1.5;
     }
 }

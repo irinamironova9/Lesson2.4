@@ -1,4 +1,4 @@
-package transport;
+package racing.transport;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -23,9 +23,7 @@ public final class Car extends Transport implements Competing {
     @Override
     public String toString() {
         return "Автомобиль " +
-                getBrand() + " " + getModel() +
-                " с объёмом двигателя в " +
-                getEngineVolume() + " литров";
+                super.toString();
     }
 
     @Override
