@@ -3,11 +3,77 @@ package racing.transport;
 import java.util.concurrent.ThreadLocalRandom;
 
 public final class Car extends Transport implements Competing {
+
+    public enum BodyType {
+
+        SEDAN("Седан"),
+        HATCHBACK("Хетчбек"),
+        COUPE("Купе"),
+        STATION_WAGON("Универсал"),
+        SUV("Внедорожник"),
+        CROSSOVER("Кроссовер"),
+        PICKUP("Пикап"),
+        VAN("Фургон"),
+        MINIVAN("Минивэн");
+
+        private final String bodyTypeName;
+
+        BodyType(String bodyTypeName) {
+            this.bodyTypeName = bodyTypeName;
+        }
+
+        public static void displayCarBodyType(Car car) {
+            if (car.getBodyType() == null) {
+                System.out.printf("Нет данных о типе кузова автомобиля %s %s.\n",
+                        car.getBrand(), car.getModel());
+                return;
+            }
+            for (int i = 0; i < BodyType.values().length; i++) {
+                if (car.getBodyType().equals(BodyType.values()[i])) {
+                    System.out.printf("Тип кузова автомобиля %s %s - %s.\n",
+                            car.getBrand(), car.getModel(),
+                            BodyType.values()[i].getBodyTypeName());
+                }
+            }
+        }
+
+        private static BodyType setCarBodyType(String bodyTypeName) {
+            for (int i = 0; i < BodyType.values().length; i++) {
+                if (bodyTypeName.equalsIgnoreCase(BodyType.values()[i].getBodyTypeName())) {
+                    return BodyType.values()[i];
+                }
+            }
+            return null;
+        }
+
+        @Override
+        public String toString() {
+            return bodyTypeName;
+        }
+
+        public String getBodyTypeName() {
+            return bodyTypeName;
+        }
+    }
+
+    private final BodyType bodyType;
+
     public Car(String brand,
                String model,
-               Double engineVolume) {
+               Double engineVolume,
+               BodyType bodyType) {
 
         super(brand, model, engineVolume);
+        this.bodyType = bodyType;
+    }
+
+    public Car(String brand,
+               String model,
+               Double engineVolume,
+               String bodyType) {
+
+        super(brand, model, engineVolume);
+        this.bodyType = BodyType.setCarBodyType(parse(bodyType));
     }
 
     @Override
@@ -23,7 +89,8 @@ public final class Car extends Transport implements Competing {
     @Override
     public String toString() {
         return "Автомобиль " +
-                super.toString();
+                super.toString() +
+                " и типом кузова " + bodyType;
     }
 
     @Override
@@ -45,5 +112,9 @@ public final class Car extends Transport implements Competing {
                 getBrand(),
                 getModel(),
                 ThreadLocalRandom.current().nextInt(1, 400));
+    }
+
+    public BodyType getBodyType() {
+        return bodyType;
     }
 }

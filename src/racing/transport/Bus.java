@@ -4,11 +4,54 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public final class Bus extends Transport implements Competing {
 
+    public enum CapacityType {
+
+        VERY_SMALL("особо малая (до 10 мест)"),
+        SMALL("малая (до 25 мест)"),
+        REGULAR("средняя (40-50 мест)"),
+        LARGE("большая (60-80 мест)"),
+        VERY_LARGE("особо большая (100-120 мест)");
+
+        private final String capacityTypeName;
+
+        CapacityType(String capacityTypeName) {
+            this.capacityTypeName = capacityTypeName;
+        }
+
+        public static void displayBusCapacityType(Bus bus) {
+            if (bus.getCapacityType() == null) {
+                System.out.printf("Нет данных о типе вместимости автобуса %s %s.\n",
+                        bus.getBrand(), bus.getModel());
+                return;
+            }
+            for (int i = 0; i < Bus.CapacityType.values().length; i++) {
+                if (bus.getCapacityType().equals(Bus.CapacityType.values()[i])) {
+                    System.out.printf("Тип вместимости автобуса %s %s - %s.\n",
+                            bus.getBrand(), bus.getModel(),
+                            Bus.CapacityType.values()[i].getCapacityTypeName());
+                }
+            }
+        }
+
+        @Override
+        public String toString() {
+            return capacityTypeName;
+        }
+
+        public String getCapacityTypeName() {
+            return capacityTypeName;
+        }
+    }
+
+    private final CapacityType capacityType;
+
     public Bus(String brand,
                String model,
-               Double engineVolume) {
+               Double engineVolume,
+               CapacityType capacityType) {
 
         super(brand, model, engineVolume);
+        this.capacityType = capacityType;
     }
 
     @Override
@@ -24,7 +67,8 @@ public final class Bus extends Transport implements Competing {
     @Override
     public String toString() {
         return "Автобус " +
-                super.toString();
+                super.toString() + " и вместимостью типа '" +
+                capacityType + "'";
     }
 
     @Override
@@ -46,5 +90,9 @@ public final class Bus extends Transport implements Competing {
                 getBrand(),
                 getModel(),
                 ThreadLocalRandom.current().nextInt(1, 300));
+    }
+
+    public CapacityType getCapacityType() {
+        return capacityType;
     }
 }

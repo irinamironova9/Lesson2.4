@@ -18,8 +18,9 @@ public abstract class Transport {
 
     public abstract void stopMoving();
 
-    public final String parse(String value){
-        return value != null && !value.isEmpty() && !value.isBlank() ? value : "(информация не указана)";
+    public static String parse(String value){
+        return value != null && !value.isEmpty() && !value.isBlank() &&
+                !value.equals("null") ? value : "(информация не указана)";
     }
 
     @Override
